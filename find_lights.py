@@ -38,7 +38,7 @@ def find_lights(image: np.ndarray, kernel: np.ndarray, c_image: np.ndarray):
 
 
 # ====================== find lights ========================
-def find_tfl_lights(c_image: np.ndarray, **kwargs):
+def get_tfl_lights(c_image: np.ndarray, **kwargs):
 
     kernel_r = np.array(
         [[-0.5, -0.5, -0.5],
@@ -79,31 +79,9 @@ def find_tfl_lights(c_image: np.ndarray, **kwargs):
 
     return candidates, auxiliary
 
-
-def show_image_and_gt(image, objs, fig_num=None):
-    plt.figure(fig_num).clf()
-    plt.imshow(image)
-    labels = set()
-    if objs is not None:
-        for o in objs:
-            poly = np.array(o['polygon'])[list(np.arange(len(o['polygon']))) + [0]]
-            plt.plot(poly[:, 0], poly[:, 1], 'r', label=o['label'])
-            labels.add(o['label'])
-        if len(labels) > 1:
-            plt.legend()
-
-
-# ==============================TEST====================================
-def test_find_tfl_lights(image_path, json_path=None, fig_num=None):
+def find_tfl_lights(image_path, json_path=None, fig_num=None):
     image = np.array(Image.open(image_path))
-    if json_path is None:
-        objects = None
-    else:
-        gt_data = json.load(open(json_path))
-        what = ['traffic light']
-        objects = [o for o in gt_data['objects'] if o['label'] in what]
-    show_image_and_gt(image, objects, fig_num)
-    red_x, red_y, green_x, green_y = find_tfl_lights(image, some_threshold=42)
+    red_x, red_y, green_x, green_y = get_tfl_lights(image, some_threshold=42)
     plt.plot(red_x, red_y, 'ro', color='r', markersize=4)
     plt.plot(green_x, green_y, 'ro', color='g', markersize=4)
 
@@ -122,7 +100,7 @@ def main(argv=None):
         json_fn = image.replace('_leftImg8bit.png', '_gtFine_polygons.json')
         if not os.path.exists(json_fn):
             json_fn = None
-        test_find_tfl_lights(image, json_fn)
+        find_tfl_lights(image, json_fn)
     if len(flist):
         print("You should now see some images, with the ground truth marked on them. Close all to quit.")
     else:
