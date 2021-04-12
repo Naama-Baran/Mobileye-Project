@@ -81,9 +81,7 @@ def get_tfl_lights(c_image: np.ndarray, **kwargs):
 
 def find_tfl_lights(image_path, json_path=None, fig_num=None):
     image = np.array(Image.open(image_path))
-    red_x, red_y, green_x, green_y = get_tfl_lights(image, some_threshold=42)
-    plt.plot(red_x, red_y, 'ro', color='r', markersize=4)
-    plt.plot(green_x, green_y, 'ro', color='g', markersize=4)
+    return get_tfl_lights(image, some_threshold=42)
 
 
 #def main(argv=None):
