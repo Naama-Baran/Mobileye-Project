@@ -86,26 +86,26 @@ def find_tfl_lights(image_path, json_path=None, fig_num=None):
     plt.plot(green_x, green_y, 'ro', color='g', markersize=4)
 
 
-def main(argv=None):
-    parser = argparse.ArgumentParser("Test TFL attention mechanism")
-    parser.add_argument('-i', '--image', type=str, help='Path to an image')
-    parser.add_argument("-j", "--json", type=str, help="Path to json GT for comparison")
-    parser.add_argument('-d', '--dir', type=str, help='Directory to scan images in')
-    args = parser.parse_args(argv)
-    default_base = 'pictures'
-    if args.dir is None:
-        args.dir = default_base
-    flist = glob.glob(os.path.join(args.dir, '*_leftImg8bit.png'))
-    for image in flist:
-        json_fn = image.replace('_leftImg8bit.png', '_gtFine_polygons.json')
-        if not os.path.exists(json_fn):
-            json_fn = None
-        find_tfl_lights(image, json_fn)
-    if len(flist):
-        print("You should now see some images, with the ground truth marked on them. Close all to quit.")
-    else:
-        print("Bad configuration?? Didn't find any picture to show")
-    plt.show(block=True)
+#def main(argv=None):
+#    parser = argparse.ArgumentParser("Test TFL attention mechanism")
+#    parser.add_argument('-i', '--image', type=str, help='Path to an image')
+#    parser.add_argument("-j", "--json", type=str, help="Path to json GT for comparison")
+#    parser.add_argument('-d', '--dir', type=str, help='Directory to scan images in')
+#    args = parser.parse_args(argv)
+#    default_base = 'pictures'
+#    if args.dir is None:
+#        args.dir = default_base
+#    flist = glob.glob(os.path.join(args.dir, '*_leftImg8bit.png'))
+#    for image in flist:
+#        json_fn = image.replace('_leftImg8bit.png', '_gtFine_polygons.json')
+#        if not os.path.exists(json_fn):
+#            json_fn = None
+#        find_tfl_lights(image, json_fn)
+#    if len(flist):
+#        print("You should now see some images, with the ground truth marked on them. Close all to quit.")
+#    else:
+#        print("Bad configuration?? Didn't find any picture to show")
+#    plt.show(block=True)
 
 #
 # if __name__ == '__main__':
